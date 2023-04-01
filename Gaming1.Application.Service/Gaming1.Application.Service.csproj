@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Gaming1.Application.Services.Contracts\Gaming1.Application.Services.Contracts.csproj" />
     <ProjectReference Include="..\Gaming1.Domain.Models\Gaming1.Domain.Models.csproj" />
+    <ProjectReference Include="..\Gaming1.Infrastructure.Repositories\Gaming1.Infrastructure.Repositories.csproj" />
   </ItemGroup>
 
 </Project>
