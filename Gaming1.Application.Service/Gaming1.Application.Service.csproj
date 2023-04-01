@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="10.1.1" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Gaming1.Application.Services.Contracts\Gaming1.Application.Services.Contracts.csproj" />
+    <ProjectReference Include="..\Gaming1.Domain.Models\Gaming1.Domain.Models.csproj" />
+  </ItemGroup>
+
+</Project>
