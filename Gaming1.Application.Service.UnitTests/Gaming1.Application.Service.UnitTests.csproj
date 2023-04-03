@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Gaming1.Application.Service\Gaming1.Application.Service.csproj" />
+    <ProjectReference Include="..\Gaming1.Tests.Common\Gaming1.Tests.Common.csproj" />
   </ItemGroup>
 
 </Project>

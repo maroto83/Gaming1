@@ -1,4 +1,7 @@
+using Autofac;
+using Gaming1.Api.DependencyInjection;
 using Gaming1.Api.Extensions;
+using Gaming1.Application.Service.Handlers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +25,14 @@ namespace Gaming1.Api
 
             services.AddControllers();
 
-            services.AddSwagger();
+            services.AddSwagger()
+                .AddAutoMappers()
+                .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetGameRequestHandler).Assembly));
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new ConfigurationModule());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

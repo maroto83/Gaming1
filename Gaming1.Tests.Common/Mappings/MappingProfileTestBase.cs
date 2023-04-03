@@ -2,7 +2,7 @@
 using System;
 using Xunit;
 
-namespace Gaming1.Application.Service.UnitTests.Mappings
+namespace Gaming1.Tests.Common.Mappings
 {
     [Collection("Sequential")]
     public abstract class MappingProfileTestBase : IDisposable

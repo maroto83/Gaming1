@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Gaming1.Application.Services.Contracts.Requests;
+using Microsoft.Extensions.DependencyInjection;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 
@@ -24,6 +25,13 @@ namespace Gaming1.Api.Extensions
                 document.OperationProcessors.Add(new OperationSecurityScopeProcessor("JWT Token"));
             });
 
+            return services;
+        }
+
+        public static IServiceCollection AddAutoMappers(this IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(GetGameRequest));
             return services;
         }
     }

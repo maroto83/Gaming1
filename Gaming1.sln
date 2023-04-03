@@ -31,6 +31,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaming1.Api.UnitTests", "Ga
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaming1.Api.FunctionalTests", "Gaming1.Api.FunctionalTests\Gaming1.Api.FunctionalTests.csproj", "{75EFA064-884A-46AA-9823-8ACEC5482E55}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{33EFB123-ADE1-43BA-98E1-F72E857D3969}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaming1.Tests.Common", "Gaming1.Tests.Common\Gaming1.Tests.Common.csproj", "{1A7E3A59-68A1-403B-B1A9-3E623B53E460}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +81,10 @@ Global
 		{75EFA064-884A-46AA-9823-8ACEC5482E55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75EFA064-884A-46AA-9823-8ACEC5482E55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75EFA064-884A-46AA-9823-8ACEC5482E55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A7E3A59-68A1-403B-B1A9-3E623B53E460}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A7E3A59-68A1-403B-B1A9-3E623B53E460}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A7E3A59-68A1-403B-B1A9-3E623B53E460}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A7E3A59-68A1-403B-B1A9-3E623B53E460}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +100,7 @@ Global
 		{2C4F897A-5134-485A-B719-592B2FFB216F} = {484A3A55-4F3E-4E7B-BA3B-0F9D3BC75A19}
 		{268C60A9-D425-43A3-8DD1-C58201792E9E} = {484A3A55-4F3E-4E7B-BA3B-0F9D3BC75A19}
 		{75EFA064-884A-46AA-9823-8ACEC5482E55} = {484A3A55-4F3E-4E7B-BA3B-0F9D3BC75A19}
+		{1A7E3A59-68A1-403B-B1A9-3E623B53E460} = {33EFB123-ADE1-43BA-98E1-F72E857D3969}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C7BA389F-482B-4DB7-BC60-9887671CBB3E}

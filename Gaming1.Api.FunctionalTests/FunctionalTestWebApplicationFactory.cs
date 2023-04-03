@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Hosting;
@@ -37,7 +38,9 @@ namespace Gaming1.Api.FunctionalTests
 
         protected override IHostBuilder CreateHostBuilder()
         {
-            return Host.CreateDefaultBuilder();
+            return Host
+                .CreateDefaultBuilder()
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory());
         }
 
         protected override void Dispose(bool disposing)

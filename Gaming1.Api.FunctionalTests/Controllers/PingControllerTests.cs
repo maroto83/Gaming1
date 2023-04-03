@@ -12,7 +12,7 @@ namespace Gaming1.Api.FunctionalTests.Controllers
         private HttpClient _client;
 
         [Fact]
-        public async Task GetMachineDetailsWithoutBackendId_WhenDeviceExists_ShouldReturnDevice()
+        public async Task Ping_ShouldReturnOk()
         {
             // Arrange
             var url = $"{TestConstants.PingUrl}";

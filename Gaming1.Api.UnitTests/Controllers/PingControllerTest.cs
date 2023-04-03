@@ -1,20 +1,16 @@
 using FluentAssertions;
 using Gaming1.Api.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Moq;
 using Xunit;
 
 namespace Gaming1.Api.UnitTests.Controllers
 {
-    public class PingControllerTest1
+    public class PingControllerTest
+        : BaseControllerTest<PingController>
     {
-        private readonly PingController _sut;
-
-        public PingControllerTest1()
+        public PingControllerTest()
         {
-            var loggerMock = new Mock<ILogger<PingController>>();
-            _sut = new PingController(loggerMock.Object);
+            Sut = new PingController(LoggerMock.Object);
         }
 
 
@@ -24,7 +20,7 @@ namespace Gaming1.Api.UnitTests.Controllers
             // Arrange
 
             // Act
-            var response = _sut.Ping();
+            var response = Sut.Ping();
 
             // Assert
             response.Should().BeOfType<OkObjectResult>();

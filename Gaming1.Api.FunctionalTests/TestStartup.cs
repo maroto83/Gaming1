@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Autofac;
+using Gaming1.Api.Extensions;
+using Gaming1.Application.Service.Handlers;
+using Gaming1.Infrastructure.Repositories.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +24,15 @@ namespace Gaming1.Api.FunctionalTests
                     .AddApplicationPart(typeof(Startup).Assembly)
                     .AddFormatterMappings()
                     .AddDataAnnotations();
+
+            services
+                .AddAutoMappers()
+                .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetGameRequestHandler).Assembly));
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterInMemoryRepository();
         }
 
         public void Configure(IApplicationBuilder app,
