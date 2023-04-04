@@ -4,9 +4,9 @@ using Gaming1.Domain.Models;
 
 namespace Gaming1.Application.Service.Mappings
 {
-    public class GameMappingProfile : Profile
+    public class ServiceMappingProfile : Profile
     {
-        public GameMappingProfile()
+        public ServiceMappingProfile()
         {
             CreateMap<Game, GetGameResponse>();
             CreateMap<Game, StartResponse>();

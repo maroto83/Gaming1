@@ -79,9 +79,9 @@ namespace Gaming1.Api.Controllers
 
                 var startResult = _mapper.Map<StartResult>(startResponse);
                 return CreatedAtAction(
-                    actionName: nameof(Get),
-                    routeValues: new { gameId = startResult.GameId },
-                    value: startResult);
+                    nameof(Get),
+                    new { gameId = startResult.GameId },
+                    startResult);
             }
             catch (Exception ex)
             {

@@ -4,9 +4,9 @@ using Gaming1.Application.Services.Contracts.Responses;
 
 namespace Gaming1.Api.Mapping
 {
-    public class GameMappingProfile : Profile
+    public class ApiMappingProfile : Profile
     {
-        public GameMappingProfile()
+        public ApiMappingProfile()
         {
             CreateMap<GetGameResponse, GetGameResult>();
             CreateMap<StartResponse, StartResult>();
