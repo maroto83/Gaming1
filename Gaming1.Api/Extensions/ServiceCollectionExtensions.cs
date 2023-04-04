@@ -1,4 +1,4 @@
-﻿using Gaming1.Application.Services.Contracts.Requests;
+﻿using Gaming1.Application.Service.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 using NSwag;
 using NSwag.Generation.Processors.Security;
@@ -31,7 +31,7 @@ namespace Gaming1.Api.Extensions
         public static IServiceCollection AddAutoMappers(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup));
-            services.AddAutoMapper(typeof(GetGameRequest));
+            services.AddAutoMapper(typeof(GetGameRequestHandler));
             return services;
         }
     }

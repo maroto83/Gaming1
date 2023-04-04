@@ -9,6 +9,7 @@ namespace Gaming1.Api.Mapping
         public GameMappingProfile()
         {
             CreateMap<GetGameResponse, GetGameResult>();
+            CreateMap<StartResponse, StartResult>();
             CreateMap<PlayerResponse, PlayerResult>();
         }
     }

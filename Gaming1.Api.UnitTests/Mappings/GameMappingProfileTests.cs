@@ -41,6 +41,23 @@ namespace Gaming1.Api.UnitTests.Mappings
         }
 
         [Theory, AutoData]
+        public void CanMap_From_StartResponse_To_StartResult(StartResponse src)
+        {
+            // Arrange
+            var expectedResult =
+                new StartResult
+                {
+                    GameId = src.GameId
+                };
+
+            // Act
+            var result = Mapper.Map<StartResult>(src);
+
+            // Assert
+            result.Should().BeEquivalentTo(expectedResult);
+        }
+
+        [Theory, AutoData]
         public void CanMap_From_PlayerResponse_To_PlayerResult(PlayerResponse src)
         {
             // Arrange

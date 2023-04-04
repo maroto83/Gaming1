@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -41,6 +42,13 @@ namespace Gaming1.Api.FunctionalTests
             return Host
                 .CreateDefaultBuilder()
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory());
+        }
+
+        protected HttpContent CreateHttpContent(object content)
+        {
+            HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(content));
+            httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            return httpContent;
         }
 
         protected override void Dispose(bool disposing)

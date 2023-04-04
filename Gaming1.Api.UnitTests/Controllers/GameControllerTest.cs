@@ -82,5 +82,44 @@ namespace Gaming1.Api.UnitTests.Controllers
             // Assert
             response.Should().BeOfType<ConflictObjectResult>();
         }
+
+        [Theory, AutoData]
+        public async Task Start_WhenGameIdNotExist_ReturnCreatedObjectResult(
+            Guid gameId,
+            StartResponse startResponse,
+            StartResult startResult)
+        {
+            // Arrange
+            startResponse.GameId = gameId;
+
+            MediatorMock
+                .Setup(x => x.Send(It.IsAny<StartRequest>(), CancellationToken.None))
+                .ReturnsAsync(startResponse);
+
+            MapperMock
+                .Setup(x => x.Map<StartResult>(startResponse))
+                .Returns(startResult);
+
+            // Act
+            var response = await Sut.Start();
+
+            // Assert
+            response.Should().BeOfType<CreatedAtActionResult>();
+        }
+
+        [Theory, AutoData]
+        public async Task Start_WhenCatchAnException_ReturnConflictObjectResult(Guid gameId, Exception exception)
+        {
+            // Arrange
+            MediatorMock
+                .Setup(x => x.Send(It.IsAny<StartRequest>(), CancellationToken.None))
+                .Throws(exception);
+
+            // Act
+            var response = await Sut.Start();
+
+            // Assert
+            response.Should().BeOfType<ConflictObjectResult>();
+        }
     }
 }

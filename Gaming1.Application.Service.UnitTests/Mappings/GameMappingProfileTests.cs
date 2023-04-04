@@ -41,6 +41,23 @@ namespace Gaming1.Application.Service.UnitTests.Mappings
         }
 
         [Theory, AutoData]
+        public void CanMap_From_Game_To_StartResponse(Game src)
+        {
+            // Arrange
+            var expectedResult =
+                new StartResponse
+                {
+                    GameId = src.GameId
+                };
+
+            // Act
+            var result = Mapper.Map<StartResponse>(src);
+
+            // Assert
+            result.Should().BeEquivalentTo(expectedResult);
+        }
+
+        [Theory, AutoData]
         public void CanMap_From_Player_To_PlayerResponse(Player src)
         {
             // Arrange

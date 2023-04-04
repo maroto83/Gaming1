@@ -61,5 +61,32 @@ namespace Gaming1.Api.Controllers
                 return Conflict(ex.Message);
             }
         }
+
+        [HttpPost("start")]
+        [ProducesResponseType(typeof(StartResult), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Start()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var startRequest = new StartRequest();
+
+            try
+            {
+                var startResponse = await _mediator.Send(startRequest, CancellationToken.None);
+
+                var startResult = _mapper.Map<StartResult>(startResponse);
+                return CreatedAtAction(
+                    actionName: nameof(Get),
+                    routeValues: new { gameId = startResult.GameId },
+                    value: startResult);
+            }
+            catch (Exception ex)
+            {
+                return Conflict(ex.Message);
+            }
+        }
     }
 }
