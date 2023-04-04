@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Gaming1.Api.Extensions;
+using Gaming1.Application.Service.DependencyInjection;
 using Gaming1.Application.Service.Handlers;
 using Gaming1.Infrastructure.Repositories.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
@@ -33,6 +34,7 @@ namespace Gaming1.Api.FunctionalTests
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterInMemoryRepository();
+            builder.RegisterResolvers();
         }
 
         public void Configure(IApplicationBuilder app,

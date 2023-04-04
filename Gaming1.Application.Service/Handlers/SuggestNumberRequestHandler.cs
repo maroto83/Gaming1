@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Gaming1.Application.Service.Exceptions;
+using Gaming1.Application.Service.Resolvers;
 using Gaming1.Application.Services.Contracts.Requests;
 using Gaming1.Application.Services.Contracts.Responses;
 using Gaming1.Domain.Models;
@@ -14,13 +15,16 @@ namespace Gaming1.Application.Service.Handlers
     {
         private readonly IMapper _mapper;
         private readonly IRepository<Game> _repository;
+        private readonly IGameResolver _gameResolver;
 
         public SuggestNumberRequestHandler(
             IMapper mapper,
-            IRepository<Game> repository)
+            IRepository<Game> repository,
+            IGameResolver gameResolver)
         {
             _mapper = mapper;
             _repository = repository;
+            _gameResolver = gameResolver;
         }
 
         public async Task<SuggestNumberResponse> Handle(SuggestNumberRequest request, CancellationToken cancellationToken)
@@ -32,15 +36,7 @@ namespace Gaming1.Application.Service.Handlers
                 throw new GameNotFoundException(request.GameId);
             }
 
-            var resultMessage = $"Yes! The secret number is {request.SuggestedNumber}. The player {request.PlayerId} is the winner!";
-            if (game.SecretNumber > request.SuggestedNumber)
-            {
-                resultMessage = $"The secret number is higher than {request.SuggestedNumber}";
-            }
-            else if (game.SecretNumber < request.SuggestedNumber)
-            {
-                resultMessage = $"The secret number is lower than {request.SuggestedNumber}";
-            }
+            var resultMessage = _gameResolver.Resolve(game.SecretNumber, request.SuggestedNumber);
 
             var suggestNumberResponse = _mapper.Map<SuggestNumberResponse>(request);
             suggestNumberResponse.ResultMessage = resultMessage;

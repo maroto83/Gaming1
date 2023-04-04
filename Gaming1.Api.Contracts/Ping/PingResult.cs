@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gaming.GuessingNumberGame.Api.Contracts.Ping
+namespace Gaming1.Api.Contracts.Ping
 {
     public class PingResult
     {

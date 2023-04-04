@@ -12,7 +12,7 @@ namespace Gaming1.Api.FunctionalTests.Controllers
     public class GameControllerTests
         : BaseControllerTests
     {
-        [Theory, AutoData]
+        [Fact]
         public async Task Get_WhenGameIdBelongToAGame_ReturnOkObjectResult_WithGameData()
         {
             // Arrange
@@ -84,6 +84,7 @@ namespace Gaming1.Api.FunctionalTests.Controllers
         {
             // Arrange
             var gameId = await StartGame();
+
             var playerId = await AddPlayer(gameId);
 
             var url = string.Format(TestConstants.PlayGameUrl, gameId, playerId);

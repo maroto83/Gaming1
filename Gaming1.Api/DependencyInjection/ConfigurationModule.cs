@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Gaming1.Application.Service.DependencyInjection;
 using Gaming1.Infrastructure.Repositories.DependencyInjection;
 
 namespace Gaming1.Api.DependencyInjection
@@ -8,6 +9,7 @@ namespace Gaming1.Api.DependencyInjection
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterInMemoryRepository();
+            builder.RegisterResolvers();
         }
     }
 }
