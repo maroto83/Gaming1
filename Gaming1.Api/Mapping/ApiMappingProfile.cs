@@ -11,6 +11,7 @@ namespace Gaming1.Api.Mapping
             CreateMap<GetGameResponse, GetGameResult>();
             CreateMap<StartResponse, StartResult>();
             CreateMap<AddPlayersResponse, AddPlayersResult>();
+            CreateMap<SuggestNumberResponse, SuggestNumberResult>();
             CreateMap<PlayerResponse, PlayerResult>();
         }
     }

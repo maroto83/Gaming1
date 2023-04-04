@@ -15,23 +15,23 @@ using Xunit;
 
 namespace Gaming1.Application.Service.UnitTests.Handlers
 {
-    public class AddPlayersRequestHandlerTests
+    public class SuggestNumberRequestHandlerTests
     {
-        private readonly AddPlayersRequestHandler _sut;
+        private readonly SuggestNumberRequestHandler _sut;
         private readonly Mock<IMapper> _mapperMock;
         private readonly Mock<IRepository<Game>> _repositoryMock;
 
-        public AddPlayersRequestHandlerTests()
+        public SuggestNumberRequestHandlerTests()
         {
             _mapperMock = new Mock<IMapper>();
             _repositoryMock = new Mock<IRepository<Game>>();
 
-            _sut = new AddPlayersRequestHandler(_mapperMock.Object, _repositoryMock.Object);
+            _sut = new SuggestNumberRequestHandler(_mapperMock.Object, _repositoryMock.Object);
         }
 
         [Theory]
         [AutoData]
-        public async Task Handle_WhenRepositoryNotContainsTheModel_Throw_GameNotFoundException(AddPlayersRequest request)
+        public async Task Handle_WhenRepositoryNotContainsTheModel_Throw_GameNotFoundException(SuggestNumberRequest request)
         {
             // Arrange
             _repositoryMock
@@ -49,28 +49,27 @@ namespace Gaming1.Application.Service.UnitTests.Handlers
 
         [Theory]
         [AutoData]
-        public async Task Handle_WhenRepositoryContainsTheModel_Return_AddPlayersResponse_WithGameData(
-            AddPlayersRequest request,
-            AddPlayersResponse addPlayersResponse,
+        public async Task Handle_WhenRepositoryContainsTheModel_Return_SuggestNumberResponse_WithGameData(
+            SuggestNumberRequest request,
+            SuggestNumberResponse suggestNumberResponse,
             Game game)
         {
             // Arrange
             request.GameId = game.GameId;
-            var expectedResult = addPlayersResponse;
+            var expectedResult = suggestNumberResponse;
 
             _repositoryMock
                 .Setup(x => x.Get(It.IsAny<Func<Game, bool>>()))
                 .ReturnsAsync(game);
 
             _mapperMock
-                .Setup(x => x.Map<AddPlayersResponse>(game))
-                .Returns(addPlayersResponse);
+                .Setup(x => x.Map<SuggestNumberResponse>(request))
+                .Returns(suggestNumberResponse);
 
             // Act
             var result = await _sut.Handle(request, CancellationToken.None);
 
             // Assert
-            _repositoryMock.Verify(x => x.Save(It.IsAny<Game>()), Times.Once);
             result.Should().BeEquivalentTo(expectedResult);
         }
     }

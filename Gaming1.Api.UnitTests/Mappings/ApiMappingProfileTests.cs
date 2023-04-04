@@ -81,6 +81,26 @@ namespace Gaming1.Api.UnitTests.Mappings
         }
 
         [Theory, AutoData]
+        public void CanMap_From_SuggestNumberResponse_To_SuggestNumberResult(SuggestNumberResponse src)
+        {
+            // Arrange
+            var expectedResult =
+                new SuggestNumberResult
+                {
+                    GameId = src.GameId,
+                    PlayerId = src.PlayerId,
+                    ResultMessage = src.ResultMessage,
+                    SuggestedNumber = src.SuggestedNumber
+                };
+
+            // Act
+            var result = Mapper.Map<SuggestNumberResult>(src);
+
+            // Assert
+            result.Should().BeEquivalentTo(expectedResult);
+        }
+
+        [Theory, AutoData]
         public void CanMap_From_PlayerResponse_To_PlayerResult(PlayerResponse src)
         {
             // Arrange

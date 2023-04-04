@@ -2,6 +2,7 @@
 using AutoMapper;
 using FluentAssertions;
 using Gaming1.Application.Service.Mappings;
+using Gaming1.Application.Services.Contracts.Requests;
 using Gaming1.Application.Services.Contracts.Responses;
 using Gaming1.Domain.Models;
 using Gaming1.Tests.Common.Mappings;
@@ -75,6 +76,26 @@ namespace Gaming1.Application.Service.UnitTests.Mappings
 
             // Act
             var result = Mapper.Map<AddPlayersResponse>(src);
+
+            // Assert
+            result.Should().BeEquivalentTo(expectedResult);
+        }
+
+        [Theory, AutoData]
+        public void CanMap_From_SuggestNumberRequest_To_SuggestNumberResponse(SuggestNumberRequest src)
+        {
+            // Arrange
+            var expectedResult =
+                new SuggestNumberResponse
+                {
+                    GameId = src.GameId,
+                    PlayerId = src.PlayerId,
+                    ResultMessage = null,
+                    SuggestedNumber = src.SuggestedNumber
+                };
+
+            // Act
+            var result = Mapper.Map<SuggestNumberResponse>(src);
 
             // Assert
             result.Should().BeEquivalentTo(expectedResult);

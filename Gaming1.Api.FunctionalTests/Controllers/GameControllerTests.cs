@@ -3,31 +3,27 @@ using FluentAssertions;
 using Gaming1.Api.Contracts.Game;
 using System;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Gaming1.Api.FunctionalTests.Controllers
 {
     [CollectionDefinition("Functional Tests", DisableParallelization = true)]
-    public class GameControllerTests : FunctionalTestWebApplicationFactory<TestStartup>
+    public class GameControllerTests
+        : BaseControllerTests
     {
-        private HttpClient _client;
-
         [Theory, AutoData]
-        public async Task Get_WhenGameIdBelongToAGame_ReturnOkObjectResult_WithGameData(Guid gameId)
+        public async Task Get_WhenGameIdBelongToAGame_ReturnOkObjectResult_WithGameData()
         {
             // Arrange
+            var gameId = await StartGame();
             var url = string.Format(TestConstants.GetGameUrl, gameId);
 
             // Act
-            _client = CreateClient();
-
-            var result = await _client.GetAsync(url);
+            var result = await ApiClient.GetAsync(url);
 
             // Assert
-            // Temporarily is NotFound because there is no endpoint to add a game previously
-            result.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
         [Theory, AutoData]
@@ -37,8 +33,7 @@ namespace Gaming1.Api.FunctionalTests.Controllers
             var url = string.Format(TestConstants.GetGameUrl, gameId);
 
             // Act
-            _client = CreateClient();
-            var result = await _client.GetAsync(url);
+            var result = await ApiClient.GetAsync(url);
 
             // Assert
             result.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -51,9 +46,7 @@ namespace Gaming1.Api.FunctionalTests.Controllers
             var url = string.Format(TestConstants.StartGameUrl);
 
             // Act
-            _client = CreateClient();
-
-            var result = await _client.PostAsync(url, CreateHttpContent(default));
+            var result = await ApiClient.PostAsync(url, CreateHttpContent(default));
 
             // Assert
             result.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -63,13 +56,11 @@ namespace Gaming1.Api.FunctionalTests.Controllers
         public async Task AddPlayers_WhenGameExists_ReturnOkObjectResult_WithGameData(AddPlayersPayload addPlayersPayload)
         {
             // Arrange
-            var game = await StartGame();
-
-            _client = CreateClient();
-            var url = string.Format(TestConstants.AddPlayersGameUrl, game.GameId);
+            var gameId = await StartGame();
+            var url = string.Format(TestConstants.AddPlayersGameUrl, gameId);
 
             // Act
-            var result = await _client.PostAsync(url, CreateHttpContent(addPlayersPayload));
+            var result = await ApiClient.PostAsync(url, CreateHttpContent(addPlayersPayload));
 
             // Assert
             result.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -82,9 +73,39 @@ namespace Gaming1.Api.FunctionalTests.Controllers
             var url = string.Format(TestConstants.AddPlayersGameUrl, gameId);
 
             // Act
-            _client = CreateClient();
+            var result = await ApiClient.PostAsync(url, CreateHttpContent(addPlayersPayload));
 
-            var result = await _client.PostAsync(url, CreateHttpContent(addPlayersPayload));
+            // Assert
+            result.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+        [Theory, AutoData]
+        public async Task Play_WhenGameExists_ReturnOkObjectResult_WithGameData(SuggestNumberPayload suggestNumberPayload)
+        {
+            // Arrange
+            var gameId = await StartGame();
+            var playerId = await AddPlayer(gameId);
+
+            var url = string.Format(TestConstants.PlayGameUrl, gameId, playerId);
+
+            // Act
+            var result = await ApiClient.PostAsync(url, CreateHttpContent(suggestNumberPayload));
+
+            // Assert
+            result.StatusCode.Should().Be(HttpStatusCode.Created);
+        }
+
+        [Theory, AutoData]
+        public async Task Play_WhenGameNotExists_ReturnNotFoundObjectResult(
+            Guid gameId,
+            Guid playerId,
+            SuggestNumberPayload suggestNumberPayload)
+        {
+            // Arrange
+            var url = string.Format(TestConstants.PlayGameUrl, gameId, playerId);
+
+            // Act
+            var result = await ApiClient.PostAsync(url, CreateHttpContent(suggestNumberPayload));
 
             // Assert
             result.StatusCode.Should().Be(HttpStatusCode.NotFound);

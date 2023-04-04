@@ -1,5 +1,4 @@
 ﻿using Autofac.Extensions.DependencyInjection;
-using Gaming1.Api.Contracts.Game;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -59,12 +58,6 @@ namespace Gaming1.Api.FunctionalTests
             var response = await client.PostAsync(url, CreateHttpContent(content));
             var result = JsonConvert.DeserializeObject<TResult>(response.Content.ReadAsStringAsync().GetAwaiter().GetResult());
             return result;
-        }
-
-        protected async Task<StartResult> StartGame()
-        {
-            var game = await GetResultDataFromUrl<StartResult>(TestConstants.StartGameUrl);
-            return game;
         }
 
         protected override void Dispose(bool disposing)

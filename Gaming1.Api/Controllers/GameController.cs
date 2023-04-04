@@ -125,5 +125,42 @@ namespace Gaming1.Api.Controllers
                 return Conflict(ex.Message);
             }
         }
+
+        [HttpPost("{gameId}/players/{playerId}/play")]
+        [ProducesResponseType(typeof(AddPlayersResult), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> SuggestNumber(Guid gameId, Guid playerId, [FromBody] SuggestNumberPayload suggestNumber)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var suggestNumberRequest = new SuggestNumberRequest
+            {
+                GameId = gameId,
+                PlayerId = playerId,
+                SuggestedNumber = suggestNumber.SuggestedNumber
+            };
+
+            try
+            {
+                var suggestNumberResponse = await _mediator.Send(suggestNumberRequest, CancellationToken.None);
+
+                var suggestNumberResult = _mapper.Map<SuggestNumberResult>(suggestNumberResponse);
+
+                return CreatedAtAction(
+                    actionName: nameof(Get),
+                    routeValues: new { gameId = suggestNumberResult.GameId },
+                    value: suggestNumberResult);
+            }
+            catch (GameNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return Conflict(ex.Message);
+            }
+        }
     }
 }
