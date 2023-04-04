@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Gaming1.Api.Contracts.Game;
+using Gaming1.Application.Service.Exceptions;
 using Gaming1.Application.Services.Contracts.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -82,6 +83,42 @@ namespace Gaming1.Api.Controllers
                     nameof(Get),
                     new { gameId = startResult.GameId },
                     startResult);
+            }
+            catch (Exception ex)
+            {
+                return Conflict(ex.Message);
+            }
+        }
+
+        [HttpPost("{gameId}/players/add")]
+        [ProducesResponseType(typeof(AddPlayersResult), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddPlayers(Guid gameId, [FromBody] AddPlayersPayload addPlayers)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var addPlayersRequest = new AddPlayersRequest
+            {
+                GameId = gameId,
+                PlayersNumber = addPlayers.PlayersNumber
+            };
+
+            try
+            {
+                var addPlayersResponse = await _mediator.Send(addPlayersRequest, CancellationToken.None);
+
+                var addPlayersResult = _mapper.Map<AddPlayersResult>(addPlayersResponse);
+
+                return CreatedAtAction(
+                    actionName: nameof(Get),
+                    routeValues: new { gameId = addPlayersResult.GameId },
+                    value: addPlayersResult);
+            }
+            catch (GameNotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {

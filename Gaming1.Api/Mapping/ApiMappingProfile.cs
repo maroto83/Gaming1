@@ -10,6 +10,7 @@ namespace Gaming1.Api.Mapping
         {
             CreateMap<GetGameResponse, GetGameResult>();
             CreateMap<StartResponse, StartResult>();
+            CreateMap<AddPlayersResponse, AddPlayersResult>();
             CreateMap<PlayerResponse, PlayerResult>();
         }
     }

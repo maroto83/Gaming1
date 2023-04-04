@@ -1,4 +1,5 @@
 ﻿using Autofac.Extensions.DependencyInjection;
+using Gaming1.Api.Contracts.Game;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -7,6 +8,7 @@ using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace Gaming1.Api.FunctionalTests
 {
@@ -51,10 +53,23 @@ namespace Gaming1.Api.FunctionalTests
             return httpContent;
         }
 
+        protected async Task<TResult> GetResultDataFromUrl<TResult>(string url, object content = default)
+        {
+            var client = CreateClient();
+            var response = await client.PostAsync(url, CreateHttpContent(content));
+            var result = JsonConvert.DeserializeObject<TResult>(response.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+            return result;
+        }
+
+        protected async Task<StartResult> StartGame()
+        {
+            var game = await GetResultDataFromUrl<StartResult>(TestConstants.StartGameUrl);
+            return game;
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
         }
     }
-
 }

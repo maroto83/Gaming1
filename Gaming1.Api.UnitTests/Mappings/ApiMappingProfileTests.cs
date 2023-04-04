@@ -58,6 +58,29 @@ namespace Gaming1.Api.UnitTests.Mappings
         }
 
         [Theory, AutoData]
+        public void CanMap_From_AddPlayersResponse_To_AddPlayersResult(AddPlayersResponse src)
+        {
+            // Arrange
+            var playerResults =
+                src.Players
+                    .Select(playerResponse => new PlayerResult { PlayerId = playerResponse.PlayerId })
+                    .ToList();
+
+            var expectedResult =
+                new AddPlayersResult
+                {
+                    GameId = src.GameId,
+                    Players = playerResults
+                };
+
+            // Act
+            var result = Mapper.Map<AddPlayersResult>(src);
+
+            // Assert
+            result.Should().BeEquivalentTo(expectedResult);
+        }
+
+        [Theory, AutoData]
         public void CanMap_From_PlayerResponse_To_PlayerResult(PlayerResponse src)
         {
             // Arrange

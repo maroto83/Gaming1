@@ -10,6 +10,7 @@ namespace Gaming1.Application.Service.Mappings
         {
             CreateMap<Game, GetGameResponse>();
             CreateMap<Game, StartResponse>();
+            CreateMap<Game, AddPlayersResponse>();
             CreateMap<Player, PlayerResponse>();
         }
     }
