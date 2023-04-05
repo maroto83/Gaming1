@@ -9,7 +9,7 @@ namespace Gaming1.Api.DependencyInjection
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterInMemoryRepository();
-            builder.RegisterResolvers();
+            builder.RegisterHandlers();
         }
     }
 }

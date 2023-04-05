@@ -1,11 +1,12 @@
 ﻿using Autofac;
 using Gaming1.Application.Service.Resolvers;
+using Gaming1.Application.Service.Services;
 
 namespace Gaming1.Application.Service.DependencyInjection
 {
     public static class ConfigurationModuleExtensions
     {
-        public static ContainerBuilder RegisterResolvers(
+        public static ContainerBuilder RegisterHandlers(
             this ContainerBuilder builder)
         {
             builder.RegisterType<WinnerResolver>();
@@ -18,6 +19,8 @@ namespace Gaming1.Application.Service.DependencyInjection
                     .RegisterProcessor(c.Resolve<LowerResolver>())
                     .Build())
                 .As<IGameResolver>();
+
+            builder.RegisterType<SecretNumberGenerator>().As<ISecretNumberGenerator>();
 
             return builder;
         }

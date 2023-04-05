@@ -111,9 +111,9 @@ namespace Gaming1.Api.Controllers
                 var addPlayersResult = _mapper.Map<AddPlayersResult>(addPlayersResponse);
 
                 return CreatedAtAction(
-                    actionName: nameof(Get),
-                    routeValues: new { gameId = addPlayersResult.GameId },
-                    value: addPlayersResult);
+                    nameof(Get),
+                    new { gameId = addPlayersResult.GameId },
+                    addPlayersResult);
             }
             catch (GameNotFoundException ex)
             {
@@ -148,9 +148,9 @@ namespace Gaming1.Api.Controllers
                 var suggestNumberResult = _mapper.Map<SuggestNumberResult>(suggestNumberResponse);
 
                 return CreatedAtAction(
-                    actionName: nameof(Get),
-                    routeValues: new { gameId = suggestNumberResult.GameId },
-                    value: suggestNumberResult);
+                    nameof(Get),
+                    new { gameId = suggestNumberResult.GameId },
+                    suggestNumberResult);
             }
             catch (GameNotFoundException ex)
             {

@@ -35,7 +35,7 @@ namespace Gaming1.EndToEndTests.Base
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterInMemoryRepository();
-            builder.RegisterResolvers();
+            builder.RegisterHandlers();
         }
 
         public void Configure(IApplicationBuilder app,

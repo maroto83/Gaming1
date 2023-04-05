@@ -34,7 +34,7 @@ namespace Gaming1.Api.FunctionalTests
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterInMemoryRepository();
-            builder.RegisterResolvers();
+            builder.RegisterHandlers();
         }
 
         public void Configure(IApplicationBuilder app,

@@ -16,7 +16,7 @@ namespace Gaming1.Application.Service.UnitTests.DependencyInjection
         {
             // Arrange
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterResolvers();
+            containerBuilder.RegisterHandlers();
             _container = containerBuilder.Build(ContainerBuildOptions.IgnoreStartableComponents);
 
             // Act

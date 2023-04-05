@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Gaming1.Application.Service.Services;
 using Gaming1.Application.Services.Contracts.Requests;
 using Gaming1.Application.Services.Contracts.Responses;
 using Gaming1.Domain.Models;
@@ -11,9 +12,15 @@ namespace Gaming1.Application.Service.Handlers
 {
     public class StartRequestHandler : BaseRequestHandler<StartRequest, StartResponse>
     {
-        public StartRequestHandler(IMapper mapper, IRepository<Game> repository)
+        private readonly ISecretNumberGenerator _secretNumberGenerator;
+
+        public StartRequestHandler(
+            IMapper mapper,
+            IRepository<Game> repository,
+            ISecretNumberGenerator secretNumberGenerator)
             : base(mapper, repository)
         {
+            _secretNumberGenerator = secretNumberGenerator;
         }
 
         protected override async Task<StartResponse> HandleRequest(StartRequest request)
@@ -23,7 +30,7 @@ namespace Gaming1.Application.Service.Handlers
                 {
                     GameId = Guid.NewGuid(),
                     Players = new List<Player>(),
-                    SecretNumber = new Random().Next(1, 100)
+                    SecretNumber = _secretNumberGenerator.Create()
                 };
 
             await Repository.Save(game);
