@@ -1,6 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using AutoMapper;
 using FluentAssertions;
+using Gaming1.Application.Service.Exceptions;
 using Gaming1.Application.Service.Handlers;
 using Gaming1.Application.Services.Contracts.Requests;
 using Gaming1.Application.Services.Contracts.Responses;
@@ -55,24 +56,20 @@ namespace Gaming1.Application.Service.UnitTests.Handlers
 
         [Theory]
         [AutoData]
-        public async Task Handle__WhenRepositoryNotContainsTheModel_Return_GetGameResponseAsNull(
-            GetGameRequest request,
-            Game game)
+        public async Task Handle_WhenRepositoryNotContainsTheModel_Throw_GameNotFoundException(GetGameRequest request)
         {
             // Arrange
-            _mapperMock
-                .Setup(x => x.Map<GetGameResponse>(game))
-                .Returns(default(GetGameResponse));
-
             _repositoryMock
                 .Setup(x => x.Get(It.IsAny<Func<Game, bool>>()))
                 .ReturnsAsync(default(Game));
 
             // Act
-            var result = await _sut.Handle(request, CancellationToken.None);
+            Func<Task> action = async () => await _sut.Handle(request, CancellationToken.None);
 
             // Assert
-            result.Should().BeNull();
+            await action.Should()
+                .ThrowAsync<GameNotFoundException>()
+                .WithMessage($"The Game {request.GameId} is not started.");
         }
     }
 }

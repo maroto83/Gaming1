@@ -51,22 +51,19 @@ namespace Gaming1.Api.UnitTests.Controllers
 
         [Theory, AutoData]
         public async Task Get_WhenGameIdNotBelongToAnyGame_ReturnNotFoundObjectResult(
-            Guid gameId)
+            Guid gameId,
+            GameNotFoundException gameNotFoundException)
         {
             // Arrange
             MediatorMock
                 .Setup(x => x.Send(It.IsAny<GetGameRequest>(), CancellationToken.None))
-                .ReturnsAsync(default(GetGameResponse));
-
-            MapperMock
-                .Setup(x => x.Map<GetGameResult>(default(GetGameResponse)))
-                .Returns(default(GetGameResult));
+                .Throws(gameNotFoundException);
 
             // Act
             var response = await Sut.Get(gameId);
 
             // Assert
-            response.Should().BeOfType<NotFoundResult>();
+            response.Should().BeOfType<NotFoundObjectResult>();
         }
 
         [Theory, AutoData]

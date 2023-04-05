@@ -50,12 +50,11 @@ namespace Gaming1.Api.Controllers
 
                 var getGameResult = _mapper.Map<GetGameResult>(getGameResponse);
 
-                if (getGameResult != default)
-                {
-                    return Ok(getGameResult);
-                }
-
-                return NotFound();
+                return Ok(getGameResult);
+            }
+            catch (GameNotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
