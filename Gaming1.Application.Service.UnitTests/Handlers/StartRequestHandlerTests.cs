@@ -18,15 +18,15 @@ namespace Gaming1.Application.Service.UnitTests.Handlers
         private readonly StartRequestHandler _sut;
         private readonly Mock<IMapper> _mapperMock;
         private readonly Mock<IRepository<Game>> _repositoryMock;
-        private readonly Mock<ISecretNumberGenerator> _secretNumberGeneratorMock;
+        private readonly Mock<IGameFactory> _gameFactory;
 
         public StartRequestHandlerTests()
         {
             _mapperMock = new Mock<IMapper>();
             _repositoryMock = new Mock<IRepository<Game>>();
-            _secretNumberGeneratorMock = new Mock<ISecretNumberGenerator>();
+            _gameFactory = new Mock<IGameFactory>();
 
-            _sut = new StartRequestHandler(_mapperMock.Object, _repositoryMock.Object, _secretNumberGeneratorMock.Object);
+            _sut = new StartRequestHandler(_mapperMock.Object, _repositoryMock.Object, _gameFactory.Object);
         }
 
         [Theory]
@@ -34,17 +34,16 @@ namespace Gaming1.Application.Service.UnitTests.Handlers
         public async Task Handle__WhenRepositoryNotContainsTheModel_Return_StartResponse(
             StartRequest request,
             StartResponse startResponse,
-            Game game,
-            int secretNumber)
+            Game game)
         {
             // Arrange
             _mapperMock
                 .Setup(x => x.Map<StartResponse>(game))
                 .Returns(startResponse);
 
-            _secretNumberGeneratorMock
-                .Setup(x => x.Create(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(secretNumber);
+            _gameFactory
+                .Setup(x => x.Create())
+                .Returns(game);
 
             // Act
             await _sut.Handle(request, CancellationToken.None);

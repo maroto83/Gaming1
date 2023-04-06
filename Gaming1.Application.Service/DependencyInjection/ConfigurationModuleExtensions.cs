@@ -22,6 +22,7 @@ namespace Gaming1.Application.Service.DependencyInjection
 
             builder.RegisterType<SecretNumberGenerator>().As<ISecretNumberGenerator>();
             builder.RegisterType<PlayerGenerator>().As<IPlayerGenerator>();
+            builder.RegisterType<GameFactory>().As<IGameFactory>();
 
             return builder;
         }
