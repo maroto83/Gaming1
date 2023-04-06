@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Gaming1.Api.Controllers
+namespace Gaming1.Api.Controllers.Game
 {
     [ApiController]
     [Route("game")]

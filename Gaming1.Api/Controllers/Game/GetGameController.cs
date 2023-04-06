@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Gaming1.Api.Contracts.Game;
+using Gaming1.Application.Service.Exceptions;
 using Gaming1.Application.Services.Contracts.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -9,12 +10,12 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gaming1.Api.Controllers
+namespace Gaming1.Api.Controllers.Game
 {
-    public class StartGameController
+    public class GetGameController
         : BaseGameController
     {
-        public StartGameController(
+        public GetGameController(
             ILogger<BaseGameController> logger,
             IMediator mediator,
             IMapper mapper)
@@ -22,28 +23,31 @@ namespace Gaming1.Api.Controllers
         {
         }
 
-        [HttpPost("start")]
-        [ProducesResponseType(typeof(StartResult), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Start()
+        [HttpGet("{gameId}")]
+        [ProducesResponseType(typeof(GetGameResult), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Get(Guid gameId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var startRequest = new StartRequest();
+            var getGameRequest = new GetGameRequest
+            {
+                GameId = gameId
+            };
 
             try
             {
-                var startResponse = await _mediator.Send(startRequest, CancellationToken.None);
+                var getGameResponse = await _mediator.Send(getGameRequest, CancellationToken.None);
 
-                var startResult = _mapper.Map<StartResult>(startResponse);
+                var getGameResult = _mapper.Map<GetGameResult>(getGameResponse);
 
-                return CreatedAtAction(
-                    "Get",
-                    "GetGame",
-                    new { gameId = startResult.GameId },
-                    startResult);
+                return Ok(getGameResult);
+            }
+            catch (GameNotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {

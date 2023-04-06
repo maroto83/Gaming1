@@ -30,45 +30,8 @@ namespace Gaming1.Api.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("{gameId}/players/add")]
-        [ProducesResponseType(typeof(AddPlayersResult), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddPlayers(Guid gameId, [FromBody] AddPlayersPayload addPlayers)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var addPlayersRequest = new AddPlayersRequest
-            {
-                GameId = gameId,
-                PlayersNumber = addPlayers.PlayersNumber
-            };
-
-            try
-            {
-                var addPlayersResponse = await _mediator.Send(addPlayersRequest, CancellationToken.None);
-
-                var addPlayersResult = _mapper.Map<AddPlayersResult>(addPlayersResponse);
-
-                return CreatedAtAction(
-                    "Get",
-                    "GetGame",
-                    new { gameId = addPlayersResult.GameId },
-                    addPlayersResult);
-            }
-            catch (GameNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return Conflict(ex.Message);
-            }
-        }
-
         [HttpPost("{gameId}/players/{playerId}/play")]
-        [ProducesResponseType(typeof(AddPlayersResult), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(SuggestNumberResult), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> SuggestNumber(Guid gameId, Guid playerId, [FromBody] SuggestNumberPayload suggestNumber)
         {
             if (!ModelState.IsValid)

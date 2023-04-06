@@ -1,7 +1,7 @@
 using AutoFixture.Xunit2;
 using FluentAssertions;
 using Gaming1.Api.Contracts.Game;
-using Gaming1.Api.Controllers;
+using Gaming1.Api.Controllers.Game;
 using Gaming1.Application.Service.Exceptions;
 using Gaming1.Application.Services.Contracts.Requests;
 using Gaming1.Application.Services.Contracts.Responses;
@@ -12,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Gaming1.Api.UnitTests.Controllers
+namespace Gaming1.Api.UnitTests.Controllers.Game
 {
     public class GetGameControllerTest
         : BaseControllerTest<GetGameController>

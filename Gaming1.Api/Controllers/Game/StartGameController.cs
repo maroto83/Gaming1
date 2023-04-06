@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Gaming1.Api.Contracts.Game;
-using Gaming1.Application.Service.Exceptions;
 using Gaming1.Application.Services.Contracts.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -10,12 +9,12 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gaming1.Api.Controllers
+namespace Gaming1.Api.Controllers.Game
 {
-    public class GetGameController
+    public class StartGameController
         : BaseGameController
     {
-        public GetGameController(
+        public StartGameController(
             ILogger<BaseGameController> logger,
             IMediator mediator,
             IMapper mapper)
@@ -23,31 +22,28 @@ namespace Gaming1.Api.Controllers
         {
         }
 
-        [HttpGet("{gameId}")]
-        [ProducesResponseType(typeof(GetGameResult), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Get(Guid gameId)
+        [HttpPost("start")]
+        [ProducesResponseType(typeof(StartResult), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Start()
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var getGameRequest = new GetGameRequest
-            {
-                GameId = gameId
-            };
+            var startRequest = new StartRequest();
 
             try
             {
-                var getGameResponse = await _mediator.Send(getGameRequest, CancellationToken.None);
+                var startResponse = await _mediator.Send(startRequest, CancellationToken.None);
 
-                var getGameResult = _mapper.Map<GetGameResult>(getGameResponse);
+                var startResult = _mapper.Map<StartResult>(startResponse);
 
-                return Ok(getGameResult);
-            }
-            catch (GameNotFoundException ex)
-            {
-                return NotFound(ex.Message);
+                return CreatedAtAction(
+                    "Get",
+                    "GetGame",
+                    new { gameId = startResult.GameId },
+                    startResult);
             }
             catch (Exception ex)
             {
