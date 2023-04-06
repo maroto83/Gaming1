@@ -30,35 +30,6 @@ namespace Gaming1.Api.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("start")]
-        [ProducesResponseType(typeof(StartResult), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Start()
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var startRequest = new StartRequest();
-
-            try
-            {
-                var startResponse = await _mediator.Send(startRequest, CancellationToken.None);
-
-                var startResult = _mapper.Map<StartResult>(startResponse);
-
-                return CreatedAtAction(
-                    "Get",
-                    "GetGame",
-                    new { gameId = startResult.GameId },
-                    startResult);
-            }
-            catch (Exception ex)
-            {
-                return Conflict(ex.Message);
-            }
-        }
-
         [HttpPost("{gameId}/players/add")]
         [ProducesResponseType(typeof(AddPlayersResult), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AddPlayers(Guid gameId, [FromBody] AddPlayersPayload addPlayers)
