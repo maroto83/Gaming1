@@ -10,24 +10,17 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gaming1.Api.Controllers
+namespace Gaming1.Api.Controllers.Game
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class GameController : ControllerBase
+    public class PlayGameController
+        : BaseGameController
     {
-        private readonly ILogger<GameController> _logger;
-        private readonly IMediator _mediator;
-        private readonly IMapper _mapper;
-
-        public GameController(
-            ILogger<GameController> logger,
+        public PlayGameController(
+            ILogger<BaseGameController> logger,
             IMediator mediator,
             IMapper mapper)
+            : base(logger, mediator, mapper)
         {
-            _logger = logger;
-            _mediator = mediator;
-            _mapper = mapper;
         }
 
         [HttpPost("{gameId}/players/{playerId}/play")]
@@ -48,9 +41,9 @@ namespace Gaming1.Api.Controllers
 
             try
             {
-                var suggestNumberResponse = await _mediator.Send(suggestNumberRequest, CancellationToken.None);
+                var suggestNumberResponse = await Mediator.Send(suggestNumberRequest, CancellationToken.None);
 
-                var suggestNumberResult = _mapper.Map<SuggestNumberResult>(suggestNumberResponse);
+                var suggestNumberResult = Mapper.Map<SuggestNumberResult>(suggestNumberResponse);
 
                 return CreatedAtAction(
                     "Get",

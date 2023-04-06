@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Gaming1.Api.Contracts.Ping;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Net;
-using Gaming1.Api.Contracts.Ping;
 
-namespace Gaming1.Api.Controllers
+namespace Gaming1.Api.Controllers.Ping
 {
     [ApiController]
     [Route("[controller]")]

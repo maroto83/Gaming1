@@ -39,9 +39,9 @@ namespace Gaming1.Api.Controllers.Game
 
             try
             {
-                var getGameResponse = await _mediator.Send(getGameRequest, CancellationToken.None);
+                var getGameResponse = await Mediator.Send(getGameRequest, CancellationToken.None);
 
-                var getGameResult = _mapper.Map<GetGameResult>(getGameResponse);
+                var getGameResult = Mapper.Map<GetGameResult>(getGameResponse);
 
                 return Ok(getGameResult);
             }

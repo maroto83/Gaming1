@@ -9,18 +9,18 @@ namespace Gaming1.Api.Controllers.Game
     [Route("game")]
     public partial class BaseGameController : ControllerBase
     {
-        private readonly ILogger<BaseGameController> _logger;
-        protected readonly IMediator _mediator;
-        protected readonly IMapper _mapper;
+        private readonly ILogger<BaseGameController> Logger;
+        protected readonly IMediator Mediator;
+        protected readonly IMapper Mapper;
 
         public BaseGameController(
             ILogger<BaseGameController> logger,
             IMediator mediator,
             IMapper mapper)
         {
-            _logger = logger;
-            _mediator = mediator;
-            _mapper = mapper;
+            Logger = logger;
+            Mediator = mediator;
+            Mapper = mapper;
         }
     }
 }

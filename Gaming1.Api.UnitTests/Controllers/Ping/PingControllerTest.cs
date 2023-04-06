@@ -1,9 +1,9 @@
 using FluentAssertions;
-using Gaming1.Api.Controllers;
+using Gaming1.Api.Controllers.Ping;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
-namespace Gaming1.Api.UnitTests.Controllers
+namespace Gaming1.Api.UnitTests.Controllers.Ping
 {
     public class PingControllerTest
         : BaseControllerTest<PingController>

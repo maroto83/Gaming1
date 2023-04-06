@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 
 namespace Gaming1.Api.Controllers.Game
 {
-    public class AddPlayersController : BaseGameController
+    public class AddPlayersController
+        : BaseGameController
     {
         public AddPlayersController(
             ILogger<BaseGameController> logger,
@@ -39,9 +40,9 @@ namespace Gaming1.Api.Controllers.Game
 
             try
             {
-                var addPlayersResponse = await _mediator.Send(addPlayersRequest, CancellationToken.None);
+                var addPlayersResponse = await Mediator.Send(addPlayersRequest, CancellationToken.None);
 
-                var addPlayersResult = _mapper.Map<AddPlayersResult>(addPlayersResponse);
+                var addPlayersResult = Mapper.Map<AddPlayersResult>(addPlayersResponse);
 
                 return CreatedAtAction(
                     "Get",
