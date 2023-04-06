@@ -1,6 +1,6 @@
 ﻿using AutoFixture.Xunit2;
 using FluentAssertions;
-using Gaming1.Api.Contracts.Game;
+using Gaming1.Api.Contracts.Game.Payloads;
 using System;
 using System.Net;
 using System.Threading.Tasks;

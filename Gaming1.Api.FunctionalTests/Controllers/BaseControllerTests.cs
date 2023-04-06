@@ -1,4 +1,5 @@
-﻿using Gaming1.Api.Contracts.Game;
+﻿using Gaming1.Api.Contracts.Game.Payloads;
+using Gaming1.Api.Contracts.Game.Results;
 using System;
 using System.Linq;
 using System.Net.Http;

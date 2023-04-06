@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gaming1.Api.Contracts.Game
+namespace Gaming1.Api.Contracts.Game.Results
 {
     public class SuggestNumberResult
     {

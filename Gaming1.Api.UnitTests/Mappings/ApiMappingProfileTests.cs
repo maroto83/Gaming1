@@ -1,7 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using AutoMapper;
 using FluentAssertions;
-using Gaming1.Api.Contracts.Game;
+using Gaming1.Api.Contracts.Game.Results;
 using Gaming1.Api.Mapping;
 using Gaming1.Application.Services.Contracts.Responses;
 using Gaming1.Tests.Common.Mappings;
