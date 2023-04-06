@@ -28,60 +28,6 @@ namespace Gaming1.Api.UnitTests.Controllers
 
 
         [Theory, AutoData]
-        public async Task Get_WhenGameIdBelongToAGame_ReturnOkObjectResult_WithGameData(
-            Guid gameId,
-            GetGameResponse getGameResponse,
-            GetGameResult getGameResult)
-        {
-            // Arrange
-            MediatorMock
-                .Setup(x => x.Send(It.IsAny<GetGameRequest>(), CancellationToken.None))
-                .ReturnsAsync(getGameResponse);
-
-            MapperMock
-                .Setup(x => x.Map<GetGameResult>(getGameResponse))
-                .Returns(getGameResult);
-
-            // Act
-            var response = await Sut.Get(gameId);
-
-            // Assert
-            response.Should().BeOfType<OkObjectResult>();
-        }
-
-        [Theory, AutoData]
-        public async Task Get_WhenGameIdNotBelongToAnyGame_ReturnNotFoundObjectResult(
-            Guid gameId,
-            GameNotFoundException gameNotFoundException)
-        {
-            // Arrange
-            MediatorMock
-                .Setup(x => x.Send(It.IsAny<GetGameRequest>(), CancellationToken.None))
-                .Throws(gameNotFoundException);
-
-            // Act
-            var response = await Sut.Get(gameId);
-
-            // Assert
-            response.Should().BeOfType<NotFoundObjectResult>();
-        }
-
-        [Theory, AutoData]
-        public async Task Get_WhenCatchAnException_ReturnConflictObjectResult(Guid gameId, Exception exception)
-        {
-            // Arrange
-            MediatorMock
-                .Setup(x => x.Send(It.IsAny<GetGameRequest>(), CancellationToken.None))
-                .Throws(exception);
-
-            // Act
-            var response = await Sut.Get(gameId);
-
-            // Assert
-            response.Should().BeOfType<ConflictObjectResult>();
-        }
-
-        [Theory, AutoData]
         public async Task Start_WhenGameIdNotExist_ReturnCreatedObjectResult(
             Guid gameId,
             StartResponse startResponse,

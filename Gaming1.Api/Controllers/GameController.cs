@@ -30,38 +30,6 @@ namespace Gaming1.Api.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{gameId}")]
-        [ProducesResponseType(typeof(GetGameResult), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Get(Guid gameId)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var getGameRequest = new GetGameRequest
-            {
-                GameId = gameId
-            };
-
-            try
-            {
-                var getGameResponse = await _mediator.Send(getGameRequest, CancellationToken.None);
-
-                var getGameResult = _mapper.Map<GetGameResult>(getGameResponse);
-
-                return Ok(getGameResult);
-            }
-            catch (GameNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return Conflict(ex.Message);
-            }
-        }
-
         [HttpPost("start")]
         [ProducesResponseType(typeof(StartResult), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Start()
@@ -78,8 +46,10 @@ namespace Gaming1.Api.Controllers
                 var startResponse = await _mediator.Send(startRequest, CancellationToken.None);
 
                 var startResult = _mapper.Map<StartResult>(startResponse);
+
                 return CreatedAtAction(
-                    nameof(Get),
+                    "Get",
+                    "GetGame",
                     new { gameId = startResult.GameId },
                     startResult);
             }
@@ -111,7 +81,8 @@ namespace Gaming1.Api.Controllers
                 var addPlayersResult = _mapper.Map<AddPlayersResult>(addPlayersResponse);
 
                 return CreatedAtAction(
-                    nameof(Get),
+                    "Get",
+                    "GetGame",
                     new { gameId = addPlayersResult.GameId },
                     addPlayersResult);
             }
@@ -148,7 +119,8 @@ namespace Gaming1.Api.Controllers
                 var suggestNumberResult = _mapper.Map<SuggestNumberResult>(suggestNumberResponse);
 
                 return CreatedAtAction(
-                    nameof(Get),
+                    "Get",
+                    "GetGame",
                     new { gameId = suggestNumberResult.GameId },
                     suggestNumberResult);
             }
